@@ -1,0 +1,78 @@
+version: '3.8'
+
+services:
+  wp-auto-maintenance:
+    build: .
+    container_name: wp-auto-maintenance
+    restart: unless-stopped
+
+    environment:
+      # 时区设置
+      - TZ=Asia/Shanghai
+
+    volumes:
+      # 配置文件目录（持久化）
+      - ./config:/app/config:rw
+
+      # 日志目录
+      - ./logs:/app/logs:rw
+
+      # 输出文件目录
+      - ./output:/app/output:rw
+
+      # 临时文件目录
+      - ./temp:/app/temp:rw
+
+    ports:
+      # Web 管理界面端口
+      - "8080:8080"
+
+    # 启动命令
+    command: /bin/bash -c "tail -f /dev/null"
+
+    # 资源限制（可选，根据需要调整）
+    # deploy:
+    #   resources:
+    #     limits:
+    #       cpus: '1'
+    #       memory: 1G
+    #     reservations:
+    #       cpus: '0.5'
+    #       memory: 512M
+
+    # 标签
+    labels:
+      - "com.wp-auto-maintenance.version=1.0.0"
+      - "com.wp-auto-maintenance.description=WordPress自动维护系统"
+
+  # 定时任务服务（可选）
+  wp-cron:
+    build: .
+    container_name: wp-auto-cron
+    restart: unless-stopped
+
+    environment:
+      - TZ=Asia/Shanghai
+
+    volumes:
+      - ./config:/app/config:rw
+      - ./logs:/app/logs:rw
+      - ./output:/app/output:rw
+      - ./temp:/app/temp:rw
+
+    # 定时执行（每天9点）
+    command: |
+      bash -c '
+        echo "0 9 * * * cd /app && ./generate-article.sh -n 3 >> /app/logs/cron.log 2>&1" | crontab -
+        echo "Cron job started. Running at 9:00 AM daily."
+        crond -f
+      '
+
+    depends_on:
+      - wp-auto-maintenance
+
+volumes:
+  config_data:
+  logs_data:
+  output_data:
+  temp_data:

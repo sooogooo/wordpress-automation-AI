@@ -1,0 +1,62 @@
+# WordPress 自动维护系统配置文件 - 示例
+# 将此文件复制为 your-website.conf 并填写实际参数
+
+# ==================== WordPress 配置 ====================
+WP_SITE_URL="https://your-wordpress-site.com"
+WP_XMLRPC_URL="https://your-wordpress-site.com/xmlrpc.php"
+WP_ADMIN_USER="your_username"
+WP_ADMIN_PASSWORD="your_password_here"
+WP_BLOG_ID="1"
+WP_AUTHOR_ID="1"
+WP_POST_STATUS="publish"
+WP_MIN_CONTENT_LENGTH="200"
+
+# 默认分类和标签
+DEFAULT_CATEGORIES=("技术" "教程" "新闻" "医美" "健康")
+DEFAULT_TAGS=("WordPress" "自动化" "AI" "内容生成")
+
+# ==================== 兰空图床配置 ====================
+LSKY_BASE_URL="https://your-lsky-domain.com/api/v1"
+LSKY_AUTH="Bearer YOUR_LSKY_API_TOKEN_HERE"
+LSKY_ALBUM_NAME="ai"
+LSKY_MAX_IMAGES="2"
+
+# ==================== AI 模型配置 ====================
+AI_PROVIDER="siliconflow"
+TITLE_URL="https://your-server.com/titles.txt"
+AI_MAX_TOKENS="4000"
+AI_TEMPERATURE="0.7"
+AI_PROMPT="请以以下标题写一篇1200-1500字的医美消费文章。标题： {title}\n\n要求：\n1. 文章前面加一段箴言式开篇，保持美观的Markdown排版；\n2. 文章正文内容清晰有层次，分段合理；\n3. 请在文章末尾单独一行返回文章关键词，格式为 \"关键字标签: 关键词1, 关键词2, ...\"；\n4. 请在文章末尾另外单独一行返回文章建议分类，格式为 \"建议分类: 分类1, 分类2, ...\"。"
+
+# Moonshot 配置（如果选择 moonshot）
+MOONSHOT_API_KEY=""
+MOONSHOT_API_URL="https://api.moonshot.cn/v1"
+MOONSHOT_MODEL="moonshot-v1-128k"
+
+# DeepSeek 配置（如果选择 deepseek）
+DEEPSEEK_API_KEY=""
+DEEPSEEK_API_URL="https://api.deepseek.com"
+DEEPSEEK_MODEL="deepseek-chat"
+
+# SiliconFlow 配置（如果选择 siliconflow）
+SILICONFLOW_API_KEY=""
+SILICONFLOW_API_URL="https://api.siliconflow.cn/v1"
+SILICONFLOW_MODEL="Pro/deepseek-ai/DeepSeek-R1"
+
+# ==================== 日志设置 ====================
+LOG_FILE="/app/logs/wp-auto-maintenance.log"
+LOG_LEVEL="INFO"
+
+# ==================== 特色图片设置 ====================
+FEATURED_IMAGE_QUALITY="95"
+FEATURED_IMAGE_MIN_SIZE="600"
+FEATURED_IMAGE_SQUARE="true"
+
+# ==================== 计划任务设置 ====================
+CRON_ENABLED="true"
+CRON_SCHEDULE="0 9 * * *"
+CRON_MAX_POSTS="3"
+
+# ==================== 目录设置 ====================
+OUTPUT_DIR="/app/output"
+TEMP_DIR="/app/temp"

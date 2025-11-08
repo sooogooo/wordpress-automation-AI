@@ -1,0 +1,89 @@
+# 忽略敏感配置文件
+config/your-website.conf
+!config/your-website.conf.default
+!config/wordpress.conf
+
+# 忽略包含敏感信息的文件
+*.local
+*.backup
+.env
+.env.*
+
+# 日志文件
+logs/
+*.log
+temp-*.log
+
+# 输出目录
+output/
+
+# 临时目录
+temp/
+tmp/
+
+# 本地生成的脚本
+generate-article.sh
+wp-auto-config.conf
+
+# Python 缓存
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Docker 运行时的数据目录
+data/
+
+# IDE 和编辑器文件
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# 操作系统文件
+*.tmp
+*.temp
+
+# Git 相关
+.DS_Store
+.vscode/
+.idea/
+.promotion.yaml
+
+# 构建产物
+build/
+dist/
+node_modules/
+
+# SSH 密钥（不应提交）
+*_rsa
+*_rsa.pub
+*.pem
+*.key
+id_rsa*
+
+# 个人笔记和文档
+notes/
+docs/private/
+*.private
+
+# 包含敏感信息的测试文件
+test*.sh
+test-*.conf
+test_*.log
+
+# 备份文件
+*.bak
+*.backup
+*.orig
+
+# 个人项目版本控制
+VERSION_PRIVATE
+CHANGELOG_PRIVATE.md
+
+# 生成文件
+_generated/
+*.generated

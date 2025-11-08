@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WordPress 自动维护系统 - Web 管理界面</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 登录页面 -->
+        <div id="login-page" class="page">
+            <div class="login-container">
+                <h1>🔐 登录管理</h1>
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="login-username">用户名</label>
+                        <input type="text" id="login-username" name="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">密码</label>
+                        <input type="password" id="login-password" name="password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">登录</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- 主管理界面 -->
+        <div id="main-page" class="page" style="display: none;">
+            <header>
+                <h1>🚀 WordPress 自动维护系统</h1>
+                <div class="user-info">
+                    <span id="logged-user">管理员</span>
+                    <button id="logout-btn" class="btn btn-logout">退出</button>
+                </div>
+            </header>
+
+            <nav class="nav-tabs">
+                <button class="nav-tab active" data-tab="wordpress">WordPress 设置</button>
+                <button class="nav-tab" data-tab="lsky">兰空图床</button>
+                <button class="nav-tab" data-tab="ai">AI 模型</button>
+                <button class="nav-tab" data-tab="general">其他设置</button>
+                <button class="nav-tab" data-tab="generate">生成脚本</button>
+            </nav>
+
+            <main>
+                <!-- WordPress 设置 -->
+                <div id="wordpress-tab" class="tab-content active">
+                    <h2>WordPress 参数设置</h2>
+                    <form id="wordpress-form">
+                        <div class="form-group">
+                            <label for="wp-url">WordPress 网址</label>
+                            <input type="url" id="wp-url" name="wpUrl" placeholder="https://www.your-website.com" required>
+                            <small>例如: https://www.ai.stemcell.gold</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="wp-xmlrpc">XML-RPC 地址</label>
+                            <input type="url" id="wp-xmlrpc" name="wpXmlrpc" placeholder="https://www.your-website.com/xmlrpc.php" required>
+                            <small>通常为: https://你的网址/xmlrpc.php</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="wp-username">用户名</label>
+                            <input type="text" id="wp-username" name="wpUsername" placeholder="请输入用户名" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="wp-password">应用程序密码</label>
+                            <input type="password" id="wp-password" name="wpPassword" placeholder="请输入应用密码" required>
+                            <small>在 WordPress 用户资料中生成应用密码</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="wp-blog-id">博客 ID</label>
+                            <input type="number" id="wp-blog-id" name="wpBlogId" value="1" required>
+                        </div>
+
+                        <div class="section-divider"></div>
+
+                        <h3>文章设置</h3>
+                        <div class="form-group">
+                            <label for="post-status">发布状态</label>
+                            <select id="post-status" name="postStatus">
+                                <option value="publish">立即发布</option>
+                                <option value="draft">存为草稿</option>
+                                <option value="pending">待审核</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="post-author">作者 ID</label>
+                            <input type="number" id="post-author" name="wpAuthorId" value="1" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="min-content-length">最小内容长度（字节）</label>
+                            <input type="number" id="min-content-length" name="minContentLength" value="200" required>
+                        </div>
+
+                        <div class="section-divider"></div>
+
+                        <h3>文章分类和标签</h3>
+                        <div class="form-group">
+                            <label for="default-categories">默认分类</label>
+                            <textarea id="default-categories" name="defaultCategories" rows="3" placeholder="技术, 教程, 新闻, 资源">技术, 教程, 新闻, 资源</textarea>
+                            <small>用逗号分隔多个分类</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="default-tags">默认标签</label>
+                            <textarea id="default-tags" name="defaultTags" rows="3" placeholder="WordPress, 自动化, 工具, 开发">WordPress, 自动化, 工具, 开发</textarea>
+                            <small>用逗号分隔多个标签</small>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- 兰空图床设置 -->
+                <div id="lsky-tab" class="tab-content">
+                    <h2>兰空图床参数设置</h2>
+                    <form id="lsky-form">
+                        <div class="form-group">
+                            <label for="lsky-base-url">兰空图床 API 地址</label>
+                            <input type="url" id="lsky-base-url" name="lskyBaseUrl" placeholder="https://lsky.your-domain.com/api/v1" required>
+                            <small>例如: https://lsky.ai.stemcell.gold/api/v1</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="lsky-auth">认证 Token</label>
+                            <input type="password" id="lsky-auth" name="lskyAuth" placeholder="请输入 Bearer Token" required>
+                            <small>在兰空图床设置中生成 API Token</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="lsky-album-name">默认相册名称</label>
+                            <input type="text" id="lsky-album-name" name="lskyAlbumName" value="ai" required>
+                            <small>从该相册获取图片</small>
+                        </div>
+                        <div class="form-group">
+                            <label for=" max-images-per-post">每篇文章插入图片数量</label>
+                            <input type="number" id=" max-images-per-post" name="maxImagesPerPost" value="2" min="1" max="10" required>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- AI 模型设置 -->
+                <div id="ai-tab" class="tab-content">
+                    <h2>AI 大模型设置</h2>
+
+                    <div class="model-provider">
+                        <h3>Moonshot (月之暗面/Kimi)</h3>
+                        <div class="form-group">
+                            <label for="moonshot-key">API Key</label>
+                            <input type="password" id="moonshot-key" name="moonshotKey" placeholder="sk-xxxxxxxxxxxxxxxx">
+                            <a href="https://platform.moonshot.cn/console/api-keys" target="_blank" class="help-link">获取 API Key</a>
+                        </div>
+                        <div class="form-group">
+                            <label for="moonshot-url">API 地址</label>
+                            <input type="url" id="moonshot-url" name="moonshotUrl" value="https://api.moonshot.cn/v1">
+                        </div>
+                        <div class="form-group">
+                            <label for="moonshot-model">模型选择</label>
+                            <select id="moonshot-model" name="moonshotModel">
+                                <option value="moonshot-v1-8k">moonshot-v1-8k (最经济)</option>
+                                <option value="moonshot-v1-32k">moonshot-v1-32k (平衡)</option>
+                                <option value="moonshot-v1-128k" selected>moonshot-v1-128k (性能最好)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="model-provider">
+                        <h3>DeepSeek</h3>
+                        <div class="form-group">
+                            <label for="deepseek-key">API Key</label>
+                            <input type="password" id="deepseek-key" name="deepseekKey" placeholder="sk-xxxxxxxxxxxxxxxx">
+                            <a href="https://platform.deepseek.com/api_keys" target="_blank" class="help-link">获取 API Key</a>
+                        </div>
+                        <div class="form-group">
+                            <label for="deepseek-url">API 地址</label>
+                            <input type="url" id="deepseek-url" name="deepseekUrl" value="https://api.deepseek.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="deepseek-model">模型选择</label>
+                            <select id="deepseek-model" name="deepseekModel">
+                                <option value="deepseek-chat">deepseek-chat</option>
+                                <option value="deepseek-coder">deepseek-coder</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="model-provider">
+                        <h3>SiliconFlow (DeepSeek Pro)</h3>
+                        <div class="form-group">
+                            <label for="siliconflow-key">API Key</label>
+                            <input type="password" id="siliconflow-key" name="siliconflowKey" placeholder="sk-xxxxxxxxxxxxxxxx">
+                            <a href="https://cloud.siliconflow.cn/i/dTStKFTP" target="_blank" class="help-link">获取 API Key</a>
+                        </div>
+                        <div class="form-group">
+                            <label for="siliconflow-url">API 地址</label>
+                            <input type="url" id="siliconflow-url" name="siliconflowUrl" value="https://api.siliconflow.cn/v1">
+                        </div>
+                        <div class="form-group">
+                            <label for="siliconflow-model">模型选择</label>
+                            <select id="siliconflow-model" name="siliconflowModel">
+                                <option value="deepseek-ai/DeepSeek-V2.5">DeepSeek-V2.5</option>
+                                <option value="Pro/deepseek-ai/DeepSeek-R1">DeepSeek-R1 (Pro)</option>
+                                <option value="THUDM/glm-4-9b-chat">GLM-4-9B</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ai-provider">使用哪个 AI 提供商</label>
+                        <select id="ai-provider" name="aiProvider" required>
+                            <option value="moonshot">Moonshot (Kimi)</option>
+                            <option value="deepseek">DeepSeek</option>
+                            <option value="siliconflow">SiliconFlow</option>
+                        </select>
+                    </div>
+
+                    <div class="section-divider"></div>
+
+                    <h3>AI 提示词设置</h3>
+                    <div class="form-group">
+                        <label for="title-url">标题源 URL</label>
+                        <input type="url" id="title-url" name="titleUrl" placeholder="https://example.com/titles.txt" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="ai-prompt">文章生成提示词</label>
+                        <textarea id="ai-prompt" name="aiPrompt" rows="8" placeholder="请以以下标题写一篇1200-1500字的医美消费文章...">请以以下标题写一篇1200-1500字的医美消费文章。标题： {title}
+
+要求：
+1. 文章前面加一段箴言式开篇，保持美观的Markdown排版；
+2. 文章正文内容清晰有层次，分段合理；
+3. 请在文章末尾单独一行返回文章关键词，格式为 "关键字标签: 关键词1, 关键词2, …"；
+4. 请在文章末尾另外单独一行返回文章建议分类，格式为 "建议分类: 分类1, 分类2, …"。</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="max-tokens">最大 Tokens</label>
+                        <input type="number" id="max-tokens" name="maxTokens" value="4000" min="1000" max="8000" step="100">
+                    </div>
+                    <div class="form-group">
+                        <label for="temperature">Temperature（创意程度）</label>
+                        <input type="range" id="temperature" name="temperature" min="0" max="2" step="0.1" value="0.7">
+                        <span class="range-value">0.7</span>
+                    </div>
+                </div>
+
+                <!-- 其他设置 -->
+                <div id="general-tab" class="tab-content">
+                    <h2>其他参数设置</h2>
+                    <form id="general-form">
+                        <div class="form-group">
+                            <label for="web-admin-user">Web 管理用户名</label>
+                            <input type="text" id="web-admin-user" name="webAdminUser" value="admin" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="web-admin-password">Web 管理密码</label>
+                            <input type="password" id="web-admin-password" name="webAdminPassword" placeholder="默认: admin9900">
+                            <small>默认密码: admin9900，建议修改</small>
+                        </div>
+
+                        <div class="section-divider"></div>
+
+                        <h3>日志设置</h3>
+                        <div class="form-group">
+                            <label for="log-file">日志文件路径</label>
+                            <input type="text" id="log-file" name="logFile" value="/var/log/wp-auto-maintenance.log">
+                        </div>
+                        <div class="form-group">
+                            <label for="log-level">日志级别</label>
+                            <select id="log-level" name="logLevel">
+                                <option value="DEBUG">DEBUG (最详细)</option>
+                                <option value="INFO" selected>INFO</option>
+                                <option value="WARN">WARN</option>
+                                <option value="ERROR">ERROR (最少)</option>
+                            </select>
+                        </div>
+
+                        <div class="section-divider"></div>
+
+                        <h3>特色图片设置</h3>
+                        <div class="form-group">
+                            <label for="featured-quality">特色图片质量 (1-100)</label>
+                            <input type="number" id="featured-quality" name="featuredQuality" value="95" min="50" max="100">
+                        </div>
+                        <div class="form-group">
+                            <label for="featured-min-size">最小图片尺寸 (像素)</label>
+                            <input type="number" id="featured-min-size" name="featuredMinSize" value="600" min="100" max="2000">
+                        </div>
+                        <div class="form-group checkbox-group">
+                            <label>
+                                <input type="checkbox" id="featured-square" name="featuredSquare" checked>
+                                强制裁剪为方形
+                            </label>
+                        </div>
+
+                        <div class="section-divider"></div>
+
+                        <h3>计划任务设置</h3>
+                        <div class="form-group">
+                            <label for="cron-schedule">执行频率 (Cron 格式)</label>
+                            <input type="text" id="cron-schedule" name="cronSchedule" value="0 9 * * *">
+                            <small>每天9点: 0 9 * * * | 每周一9点: 0 9 * * 1</small>
+                        </div>
+                        <div class="form-group checkbox-group">
+                            <label>
+                                <input type="checkbox" id="cron-enabled" name="cronEnabled" checked>
+                                启用计划任务
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label for="max-posts-cron">每次计划任务生成文章数量</label>
+                            <input type="number" id=" max-posts-cron " name="maxPostsCron" value="3" min="1" max="10">
+                        </div>
+                    </form>
+                </div>
+
+                <!-- 生成脚本 -->
+                <div id="generate-tab" class="tab-content">
+                    <h2>生成 Bash 脚本</h2>
+                    <div class="action-buttons">
+                        <button id="save-config-btn" class="btn btn-success">保存配置</button>
+                        <button id="generate-bash-btn" class="btn btn-primary">生成 Bash 脚本</button>
+                        <button id="test-config-btn" class="btn btn-info">测试配置</button>
+                    </div>
+
+                    <div class="section-divider"></div>
+
+                    <h3>生成的配置内容</h3>
+                    <div class="code-block">
+                        <textarea id="config-output" class="code-output" rows="20" readonly></textarea>
+                    </div>
+
+                    <div class="section-divider"></div>
+
+                    <h3>生成的 Bash 脚本</h3>
+                    <div class="code-block">
+                        <textarea id="bash-output" class="code-output" rows="25" readonly></textarea>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button id="download-config-btn" class="btn btn-secondary">下载配置文件</button>
+                        <button id="download-bash-btn" class="btn btn-secondary">下载 Bash 脚本</button>
+                        <button id="copy-config-btn" class="btn btn-secondary">复制配置</button>
+                        <button id="copy-bash-btn" class="btn btn-secondary">复制脚本</button>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

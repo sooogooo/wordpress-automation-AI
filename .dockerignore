@@ -1,0 +1,109 @@
+# 忽略无需包含在 Docker 镜像中的文件
+
+# 配置文件中的敏感信息（使用示例文件代替）
+config/your-website.conf
+config/*.backup
+config/*.local
+
+# 日志文件
+logs/
+*.log
+*.log.*
+
+# 临时文件
+.temp/
+temp/
+*.tmp
+*.temp
+
+# 输出文件
+output/
+
+# Python 缓存
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# 操作系统文件
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# 编辑器文件
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+*.bak
+
+# Git 目录
+.git/
+.gitignore
+
+# Docker 文件（本身不需要）
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# 文档和说明（可选，可以保留）
+# README.md
+# docs/
+
+# 测试文件
+test/
+tests/
+*.test.sh
+test-*.sh
+
+# 生成的脚本（用户自己生成）
+generate-article.sh
+wp-auto-config.conf
+
+# IDE 文件
+*.iml
+*.ipr
+*.iws
+.project
+.classpath
+.settings/
+
+# 备份文件
+*.backup
+*.back
+*.old
+*.orig
+
+# 环境变量文件
+.env
+.env.local
+.env.*.local
+
+# 其他不需要的文件
+.claude/
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
